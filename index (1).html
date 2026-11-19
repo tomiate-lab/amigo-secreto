@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#15132b">
+  <meta name="description" content="Uma surpresa do amigo secreto! 🎁">
+  <title>Meu amigo secreto 🎁</title>
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100svh; background: radial-gradient(circle at 50% 10%, #472677 0%, #24183f 42%, #15132b 100%); color: #fff; display: grid; place-items: center; padding: 24px; overflow-x: hidden; }
+    .card { width: min(100%, 420px); padding: 38px 25px; border-radius: 28px; text-align: center; background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.18); box-shadow: 0 25px 75px rgba(0,0,0,.32); }
+    .gift { font-size: 86px; line-height: 1.2; animation: bounce 2s ease-in-out infinite; }
+    h1 { font-size: clamp(27px,7vw,38px); line-height: 1.1; margin: 14px 0; }
+    p { color: #e6ddfa; font-size: 17px; line-height: 1.5; }
+    button { appearance: none; border: 0; padding: 17px 23px; border-radius: 16px; background: #ffc84a; color: #241128; font-weight: 800; font-size: 17px; cursor: pointer; width: 100%; box-shadow: 0 7px 0 #bb812b; transition: transform .15s,box-shadow .15s; }
+    button:active { transform: translateY(4px); box-shadow: 0 3px 0 #bb812b; }
+    .overlay { position: fixed; inset: 0; padding: 20px; display: grid; place-items: center; background: rgba(5,4,18,.75); backdrop-filter: blur(9px); opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s; z-index: 3; }
+    .overlay.show { opacity: 1; visibility: visible; }
+    .modal { position: relative; width: min(100%, 390px); text-align: center; border-radius: 26px; padding: 36px 24px 26px; background: #fff; color: #281a3b; box-shadow: 0 30px 95px rgba(0,0,0,.45); transform: scale(.84) translateY(22px); transition: transform .35s cubic-bezier(.2,1.35,.3,1); }
+    .overlay.show .modal { transform: scale(1) translateY(0); }
+    .modal .emoji { font-size: 78px; line-height: 1.1; }
+    .modal h2 { font-size: clamp(28px,8vw,37px); margin: 17px 0 8px; line-height: 1.1; color: #6938a0; }
+    .modal p { color: #554963; margin: 10px 0 24px; }
+    .modal button { background: #743ac0; color: white; box-shadow: 0 6px 0 #4b2381; }
+    .modal button:active { box-shadow: 0 2px 0 #4b2381; }
+    .close { position: absolute; top: 10px; right: 11px; border: 0; background: transparent!important; color: #776c83!important; box-shadow: none!important; padding: 6px; width: 38px; font-size: 28px; line-height: 1; }
+    .foot { font-size: 12px; opacity: .7; margin-top: 25px; }
+    @keyframes bounce { 0%,100% { transform: rotate(-7deg) translateY(0) } 50% { transform: rotate(7deg) translateY(-10px) } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none!important; transition: none!important; } }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="gift" aria-hidden="true">🎁</div>
+    <h1>Olha quem eu tirei no amigo secreto!</h1>
+    <p>Prepare-se para descobrir quem foi a pessoa sorteada... 👀</p>
+    <button id="reveal" type="button">🔍 Revelar agora!</button>
+    <div class="foot">🤫 Segredo absoluto!</div>
+  </main>
+
+  <div class="overlay" id="overlay" role="presentation">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc">
+      <button class="close" id="close" aria-label="Fechar" type="button">×</button>
+      <div class="emoji" aria-hidden="true">🤣🎉</div>
+      <h2 id="modal-title">Cê é curioso, hein!!</h2>
+      <p id="modal-desc">Achou mesmo que eu ia contar quem tirei? 😂<br>Agora guarda essa curiosidade até o dia!</p>
+      <button id="again" type="button">😂 Caí direitinho!</button>
+    </section>
+  </div>
+  <script>
+    const overlay = document.getElementById('overlay');
+    const reveal = document.getElementById('reveal');
+    const close = document.getElementById('close');
+    const again = document.getElementById('again');
+    const openModal = () => { overlay.classList.add('show'); close.focus(); };
+    const closeModal = () => { overlay.classList.remove('show'); reveal.focus(); };
+    reveal.addEventListener('click', openModal);
+    close.addEventListener('click', closeModal);
+    again.addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('show')) closeModal(); });
+  </script>
+</body>
+</html>
